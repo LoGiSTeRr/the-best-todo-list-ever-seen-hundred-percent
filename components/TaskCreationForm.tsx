@@ -44,7 +44,7 @@ const TaskCreationForm = ({onSubmit} : TaskCreationFormProps) => {
                     Add Task
                 </button>
             ) : (
-                <div className="card bg-base-100 w-[45vw] h-full p-5">
+                <div className="card bg-base-100 w-[85vw] sm:w-[45vw] h-full p-5">
                     <form className="space-y-4" onSubmit={handleSubmit}>
                         <div className="flex gap-2">
                             <input required type="text"

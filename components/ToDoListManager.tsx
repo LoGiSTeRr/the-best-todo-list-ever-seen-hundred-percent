@@ -12,10 +12,29 @@ const ToDoListManager = () => {
         setTasks([...tasks, {...newTask, id: v4() }]);
     };
 
+    const handleDeleteTask = (id: string) => {
+        setTasks(tasks.filter(task => task.id !== id));
+    };
+
+    const handleUpdateTask = (id: string, updatedTask: Partial<TaskType>) => {
+        const index = tasks.findIndex(task => task.id === id);
+
+        if (index !== -1) {
+            // Create a new tasks array
+            const newTasks = [...tasks];
+
+            // Update the existing task with new data
+            newTasks[index] = { ...newTasks[index], ...updatedTask };
+
+            // Update the tasks state
+            setTasks(newTasks);
+        }
+    }
+
     return (
-        <div>
+        <div className="flex flex-col justify-center items-center">
             <TaskCreationForm onSubmit={handleAddTask}/>
-            <ToDoList tasks={tasks}/>
+            <ToDoList tasks={tasks} onDeleteTask={handleDeleteTask} onUpdateTask={handleUpdateTask}/>
         </div>
     );
 };
