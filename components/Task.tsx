@@ -89,7 +89,7 @@ const Task = ({task, onDeleteTask, onUpdateTask} : TaskProp) => {
                 </button>
                 <dialog id="delete_task_modal" ref={deleteTaskDialogRef} className="modal">
                     <div className="modal-box flex flex-col gap-3">
-                        <h3 className="font-bold text-lg">Are You sure you want to delete this task?</h3>
+                        <h3 className="font-bold text-lg">Are you sure you want to delete this task?</h3>
                         <div className="flex gap-3">
                             <button
                                 className="btn btn-error"
