@@ -1,10 +1,11 @@
 'use client'
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import ToDoList from "@/components/ToDoList";
 import {v4} from "uuid";
 import TaskCreationForm from "@/components/TaskCreationForm";
 import apiClient from "@/libs/api";
 import {toast} from "react-hot-toast";
+import {id} from "postcss-selector-parser";
 
 const ToDoListManager = () => {
 
@@ -21,7 +22,27 @@ const ToDoListManager = () => {
         setTasks([...tasks, {...newTask, id: v4() }]);
     };
 
-    const handleDeleteTask = (id: string) => {
+
+    useEffect(() => {
+        const fetchTasks = async () => {
+            try {
+                const response = await apiClient.get("/task");
+                setTasks(response.data);
+            } catch (e) {
+                toast.error("Failed to fetch tasks");
+            }
+        };
+
+        fetchTasks();
+    }, []);
+
+    const handleDeleteTask = async (id: any) => {
+        try {
+            await apiClient.delete(`/task`, id);
+            toast.success("Task deleted");
+        } catch (e) {
+            toast.error("Failed to delete task");
+        }
         setTasks(tasks.filter(task => task.id !== id));
     };
 
