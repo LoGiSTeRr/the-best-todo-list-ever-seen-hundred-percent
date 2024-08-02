@@ -1,4 +1,5 @@
 import mongoose, {Schema} from "mongoose";
+import toJSON from "./plugins/toJSON";
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -20,4 +21,6 @@ const userSchema = new mongoose.Schema({
     toJSON: {virtuals: true}
 });
 
-userSchema.plugin(mongoose);
+userSchema.plugin(toJSON);
+
+export default mongoose.models.User || mongoose.model("User", userSchema);

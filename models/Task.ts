@@ -1,4 +1,5 @@
 import mongoose, {Schema} from "mongoose";
+import toJSON from "@/models/plugins/toJSON";
 
 const taskSchema = new mongoose.Schema({
     name: {
@@ -21,3 +22,7 @@ const taskSchema = new mongoose.Schema({
     timestamps: true,
     toJSON: {virtuals: true}
 });
+
+taskSchema.plugin(toJSON);
+
+export default mongoose.models.Task || mongoose.model("Task", taskSchema);
