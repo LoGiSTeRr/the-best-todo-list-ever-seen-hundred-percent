@@ -5,7 +5,6 @@ import {v4} from "uuid";
 import TaskCreationForm from "@/components/TaskCreationForm";
 import apiClient from "@/libs/api";
 import {toast} from "react-hot-toast";
-import {id} from "postcss-selector-parser";
 
 const ToDoListManager = () => {
 
@@ -27,6 +26,7 @@ const ToDoListManager = () => {
         const fetchTasks = async () => {
             try {
                 const response = await apiClient.get("/task");
+                toast.success("data fetched");
                 setTasks(response.data);
             } catch (e) {
                 toast.error("Failed to fetch tasks");
