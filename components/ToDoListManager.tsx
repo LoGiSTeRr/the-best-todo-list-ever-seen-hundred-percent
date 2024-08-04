@@ -12,13 +12,14 @@ const ToDoListManager = () => {
 
     const handleAddTask = async (newTask: TaskType) => {
         try {
-            await apiClient.post("/task", newTask);
+            let taskResponse= await apiClient.post("/task", newTask);
             toast.success("Task submitted");
+            console.log(taskResponse.data);
+            setTasks([...tasks, {...taskResponse.data}]);
         }
         catch (e){
-
+            toast.error("Task submission failed, try again");
         }
-        setTasks([...tasks, {...newTask, id: v4() }]);
     };
 
 
