@@ -15,6 +15,10 @@ const userSchema = new mongoose.Schema({
     image: {
         type: String,
         trim: true,
+    },
+    hasAccess:{
+        type: String,
+        default: false
     }
 }, {
     timestamps: true,

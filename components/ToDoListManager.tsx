@@ -39,7 +39,7 @@ const ToDoListManager = () => {
 
     const handleDeleteTask = async (id: any) => {
         try {
-            await apiClient.delete(`/task`, id);
+            await apiClient.delete(`/task`, { data: { id } });
             toast.success("Task deleted");
         } catch (e) {
             toast.error("Failed to delete task");
@@ -47,18 +47,19 @@ const ToDoListManager = () => {
         setTasks(tasks.filter(task => task.id !== id));
     };
 
-    const handleUpdateTask = (id: string, updatedTask: Partial<TaskType>) => {
+    const handleUpdateTask = async (id: string, updatedTask: Partial<TaskType>) => {
         const index = tasks.findIndex(task => task.id === id);
 
         if (index !== -1) {
-            // Create a new task array
-            const newTasks = [...tasks];
-
-            // Update the existing task with new data
-            newTasks[index] = { ...newTasks[index], ...updatedTask };
-
-            // Update the task state
-            setTasks(newTasks);
+            try {
+                let taskResponse= await apiClient.put(`/task`, { id: id, data: updatedTask });
+                const newTasks = [...tasks];
+                newTasks[index] = { ...newTasks[index], ...taskResponse.data };
+                setTasks(newTasks);
+                toast.success("Task updated");
+            } catch (e) {
+                toast.error("Failed to update task");
+            }
         }
     }
 
